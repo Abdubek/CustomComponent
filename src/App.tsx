@@ -77,8 +77,29 @@ class App extends React.Component<Props, State> {
               }}
               blacklistedAttrs={[]}
               blacklistedTags={[]}
-              components={{ Btn }}
-              jsx={`<button key="1" onClick={clickHandler}> Нажми меня! </button>` }
+              components={{}}
+              jsx={`
+                <ul uk-accordion={"true"}>
+                  <li class="uk-open">
+                      <a class="uk-accordion-title" href="#">Item 1</a>
+                      <div class="uk-accordion-content">
+                          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                      </div>
+                  </li>
+                  <li>
+                      <a class="uk-accordion-title" href="#">Item 2</a>
+                      <div class="uk-accordion-content">
+                          <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor reprehenderit.</p>
+                      </div>
+                  </li>
+                  <li>
+                      <a class="uk-accordion-title" href="#">Item 3</a>
+                      <div class="uk-accordion-content">
+                          <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat proident.</p>
+                      </div>
+                  </li>
+              </ul>
+              ` }
             />
           </div>
           <button style={{width: '100%', height: '50px', backgroundColor: 'gray', border: 'none', color: 'white'}}
@@ -92,12 +113,3 @@ class App extends React.Component<Props, State> {
 }
 
 export default App;
-
-class Btn extends React.Component<{press: () => void}>{
-
-  render() {
-    return (
-      <button onClick={this.props.press}>Click</button>
-    )
-  }
-}
