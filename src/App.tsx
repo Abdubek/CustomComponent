@@ -16,7 +16,7 @@ class App extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      html: '',
+      html: '<ForEach data={text}></ForEach>',
       isChanged: false,
     }
   }
