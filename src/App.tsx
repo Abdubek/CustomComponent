@@ -1,32 +1,47 @@
 import React from 'react';
 import './App.css';
 import MonacoEditor from "react-monaco-editor";
+import ReactDOM from 'react-dom';
 //@ts-ignore
 import JsxParser from 'react-jsx-parser/lib/react-jsx-parser.min'
 import { ForEach } from './HelpComponents';
 
 type Props = {}
 type State = {
-  html: string,
+  script: string,
   isChanged: boolean,
 }
-
 
 class App extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      html: '<ForEach data={text}></ForEach>',
+        script: 'class Hello extends React.Component {\n' +
+            '  render() {\n' +
+            '    return React.createElement(\'div\', null, [\n' +
+            '        React.createElement(\'span\', { className: "someClass" }, \'Hello world\'),\n' +
+            '        React.createElement(\'span\', { className: "someClass" }, \'Yeahow\')\n' +
+            '    ]);\n' +
+            '  }\n' +
+            '}\n' +
+            '\n' +
+            'ReactDOM.render(\n' +
+            '  React.createElement(Hello, {toWhat: \'мир\'}, null),\n' +
+            '  document.getElementById(\'customComp\')\n' +
+            ');\n' +
+            '\n' +
+            '\n',
       isChanged: false,
     }
   }
 
-  changeHtml = (value: string, e: any) => {
-    this.setState({ html: value })
+  changeScript = (value: string, e: any) => {
+    this.setState({ script: value })
   };
 
   apply = () => {
-    this.setState({isChanged: true})
+    this.setState({isChanged: true});
+    new Function("React", "ReactDOM", this.state.script)(React, ReactDOM);
   };
 
   render() {
@@ -38,24 +53,24 @@ class App extends React.Component<Props, State> {
                     <MonacoEditor
                         width={"100%"}
                         height={"100%"}
-                        language={"html"}
                         theme={'vs-dark'}
-                        onChange={this.changeHtml}
-                        value={this.state.html}
+                        onChange={this.changeScript}
+                        value={this.state.script}
                     />
                 </div>
 
                 <div style={{display: 'flex', flexDirection: 'column', width: '30%'}}>
                     <div style={{width: '30%', height: '100%'}}>
-                        <JsxParser
+                        <div id="customComp" />
+                        {/*<JsxParser
                             bindings={{
                                 text: [{name:"QWE"}, {name:"asd"}]
                             }}
                             blacklistedAttrs={[]}
                             blacklistedTags={[]}
-                            components={{ForEach}}
+                            components={{}}
                             jsx={this.state.html}
-                        />
+                        />*/}
                     </div>
                     <button
                         style={{width: '100%', height: '50px', backgroundColor: 'gray', border: 'none', color: 'white'}}
